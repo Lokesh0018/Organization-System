@@ -4,7 +4,6 @@ import User from "../models/User";
 import { TaskStatus, UserRole } from "../types/Types";
 
 export default interface UserInterface {
-
     createEmployee(user:User):void;
     viewEmployee(userId:number):User;
     updateEmployee(userId:number,user:User):void;
