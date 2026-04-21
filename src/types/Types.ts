@@ -1,3 +1,3 @@
-export type UserRole = "Admin" | "HR" | "PM" | "Employee" | "Client" | "Finance";
+export type UserRole = "ADMIN" | "HR" | "PM" | "EMPLOYEE" | "CLIENT" | "FINANCE";
 
 export type TaskStatus = "TODO" | "In Progress" | "Done";

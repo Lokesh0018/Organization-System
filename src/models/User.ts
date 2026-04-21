@@ -4,6 +4,7 @@ import Project from "./Project";
 import Task from "./Task";
 
 export default abstract class User implements UserInterface {
+
     private id: string;
     private name: string;
     private email: string;
@@ -58,19 +59,64 @@ export default abstract class User implements UserInterface {
         this.role = role;
     }
 
-    abstract createEmployee(user: User): void;
-    abstract viewEmployee(userId: number): User;
-    abstract updateEmployee(userId: number, user: User): void;
-    abstract deleteEmployee(userId: number): void;
-    abstract assignRoles(userId: number, role: UserRole): void;
-    abstract createProject(project: Project): void;
-    abstract assignProjectToEmployee(projectId: string, employeeId: string): void;
-    abstract viewProject(projectId: string): Project;
-    abstract assignClients(clientId: string, employeeId: string): void;
-    abstract createTasks(task: Task): void;
-    abstract updateTasks(taskId: string, taskStatus: TaskStatus): void;
-    abstract viewOwnTasks(employeeId: string): Task[];
-    abstract trackProjectProgress(projectId: string): Task[];
-    abstract manageSalary(employeeId: string): void;
-    abstract manageInsurance(employeeId: string): void;
+    createEmployee(user: User): void {
+        throw new Error("Method not implemented.");
+    }
+
+    viewEmployee(userId: number): User {
+        throw new Error("Method not implemented.");
+    }
+
+    updateEmployee(userId: number, user: User): void {
+        throw new Error("Method not implemented.");
+    }
+
+    deleteEmployee(userId: number): void {
+        throw new Error("Method not implemented.");
+    }
+
+    assignRoles(userId: number, role: UserRole): void {
+        throw new Error("Method not implemented.");
+    }
+
+    createProject(project: Project): void {
+        throw new Error("Method not implemented.");
+    }
+
+    assignProjectToEmployee(projectId: string, employeeId: string): void {
+        throw new Error("Method not implemented.");
+    }
+
+    viewProject(projectId: string): Project {
+        throw new Error("Method not implemented.");
+    }
+
+    assignClients(clientId: string, employeeId: string): void {
+        throw new Error("Method not implemented.");
+    }
+
+    createTasks(task: Task): void {
+      throw new Error("Method not implemented.");
+    }
+
+    updateTasks(taskId: string, taskStatus: TaskStatus): void {
+        throw new Error("Method not implemented.");
+    }
+
+    viewOwnTasks(employeeId: string): Task[] {
+        throw new Error("Method not implemented.");
+    }
+
+    trackProjectProgress(projectId: string): Task[] {
+        throw new Error("Method not implemented.");
+    }
+
+    manageSalary(employeeId: string): void {
+        throw new Error("Method not implemented.");
+    }
+
+    manageInsurance(employeeId: string): void {
+        throw new Error("Method not implemented.");
+    }
+
 }
