@@ -15,9 +15,9 @@ export default class UserService {
         return this.userPath;
     }
     
-    findByEmail(path:string,email:string):UserJson | undefined{
+    findByEmail(email:string):UserJson | undefined{
         const jsonService = new JsonService();
-        const data = jsonService.readJson(path);
+        const data = jsonService.readJson(UserService.getPath());
         return data.find(d => d.email === email);
     }
 

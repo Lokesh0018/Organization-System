@@ -29,7 +29,7 @@ while (true) {
         let actions;
         switch(curUser.role){
             case "ADMIN":
-                actions = ["Create Employee","View Employee","Update Employee","Delete Employee","Assign Roles","Create Project","Assign Project to Employees","Assign Clients","Create Tasks","View Project","Update Tasks","View Own Tasks","Track Project Progress","Manage Salaries","Manage Insurance","Logout\n"];
+                actions = ["Create Employee","View Employees","Update Employee","Delete Employee","Assign Roles","Create Project","Assign Project to Employees","Assign Clients","Create Tasks","View Project","Update Tasks","View Own Tasks","Track Project Progress","Manage Salaries","Manage Insurance","Logout\n"];
                 actions.forEach((a,i) => console.log(`${i+1}. ${a}`));
                 const adminAction = parseInt(prompt("Enter Action: "));
                 switch(adminAction){
@@ -37,19 +37,27 @@ while (true) {
                         service = EmployeeService.getInstance();
                         service.createEmployee();
                         break;
+                    case 2:
+                        service = EmployeeService.getInstance();
+                        service.viewEmployees();
+                        break;
+                    case 3:
+                        service = EmployeeService.getInstance();
+                        service.updateEmployee();
+                        break;
                     case 16:
                         curUser = null;
                 }
                 break;
             case "HR":
-                actions = ["Create Employee","View Employee","Update Employee","Logout\n"];
+                actions = ["Create Employee","View Employees","Update Employee","Logout\n"];
                 actions.forEach((a,i) => console.log(`${i+1}. ${a}`));
                 const hrAction = parseInt(prompt("Enter Action: "));
                 if(hrAction===4)
                     curUser = null;
                 break;
             case "PM":
-                actions = ["View Employee","Create Project","Assign Project to Employees","Assign Clients","Create Tasks","View Project","Update Tasks","View Own Tasks","Track Project Progress","Logout\n"];
+                actions = ["View Employees","Create Project","Assign Project to Employees","Assign Clients","Create Tasks","View Project","Update Tasks","View Own Tasks","Track Project Progress","Logout\n"];
                 actions.forEach((a,i) => console.log(`${i+1}. ${a}`));
                 const pmAction = parseInt(prompt("Enter Action: "));
                 if(pmAction===10)

@@ -3,7 +3,6 @@ import UserService from "./UserService";
 
 export default class LoginService {
     private static loginService:LoginService;
-    private static userPath:string = "D:/organization-system/src/data/users.json";
 
     static getInstance():LoginService{
         if(!this.loginService)
@@ -13,7 +12,7 @@ export default class LoginService {
 
     verifyLogin(email:string,password:string):UserJson | null {
         const userService = UserService.getInstance()
-        const user = userService.findByEmail(LoginService.userPath,email);
+        const user = userService.findByEmail(email);
         if(!user){
             console.log("\nInvalid User\n");
             return null;

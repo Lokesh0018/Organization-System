@@ -1,0 +1,14 @@
+[
+  {
+    "id": "E1",
+    "name": "Emp1",
+    "email": "email@org.in",
+    "assignedProjectId": "P1"
+  },
+  {
+    "id": "E2",
+    "name": "1",
+    "email": "1",
+    "assignedProjectId": ""
+  }
+]
