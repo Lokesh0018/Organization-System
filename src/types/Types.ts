@@ -9,3 +9,10 @@ export type UserJson = {
     "password":string;
     "role":UserRole;
 }
+
+export type EmployeeJson = {
+    "id":string;
+    "name":string;
+    "email":string;
+    "assignedProjectId":string;
+}

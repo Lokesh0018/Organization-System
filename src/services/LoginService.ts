@@ -1,12 +1,19 @@
 import { UserJson } from "../types/Types";
-import JsonService from "./JsonService";
+import UserService from "./UserService";
 
 export default class LoginService {
-    static jsonService = new JsonService();
+    private static loginService:LoginService;
+    private static userPath:string = "D:/organization-system/src/data/users.json";
 
-    static verifyLogin(email:string,password:string):UserJson | null {
-        const data: UserJson[] = this.jsonService.readJson("D:/organization-system/src/data/users.json");
-        const user = data.find(u => u.email === email);
+    static getInstance():LoginService{
+        if(!this.loginService)
+            this.loginService = new LoginService();
+        return this.loginService;
+    }
+
+    verifyLogin(email:string,password:string):UserJson | null {
+        const userService = UserService.getInstance()
+        const user = userService.findByEmail(LoginService.userPath,email);
         if(!user){
             console.log("\nInvalid User\n");
             return null;

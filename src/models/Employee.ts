@@ -1,11 +1,11 @@
 export default class Employee {
-    private employeeId:string;
+    private id:string;
     private name:string;
     private email:string;
     private assignedProjectId:string;
 
-    constructor(employeeId:string,name:string,email:string,assignedProjectId:string) {
-        this.employeeId = employeeId;
+    constructor(id:string,name:string,email:string,assignedProjectId:string) {
+        this.id = id;
         this.name = name;
         this.email = email;
         this.assignedProjectId = assignedProjectId;
