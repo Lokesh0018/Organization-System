@@ -6,7 +6,7 @@ import UserService from "./UserService";
 const prompt = promptSync();
 export default class EmployeeService {
     private static employeeService: EmployeeService;
-    private static empPath: string = "D:/organization-system/src/data/employees.json";
+    private static path: string = "D:/organization-system/src/data/employees.json";
 
     static getInstance(): EmployeeService {
         if (!this.employeeService)
@@ -15,7 +15,7 @@ export default class EmployeeService {
     }
 
     static getPath(): string {
-        return this.empPath;
+        return this.path;
     }
 
     getData(): EmployeeJson[] {

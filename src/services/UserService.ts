@@ -14,6 +14,10 @@ export default class UserService {
     static getPath():string{
         return this.userPath;
     }
+
+    findById(id:string,data:UserJson[]):UserJson | undefined {
+        return data.find(d => d.id === id);
+    }
     
     findByEmail(email:string,data:UserJson[]):UserJson | undefined{
         return data.find(d => d.email === email);
