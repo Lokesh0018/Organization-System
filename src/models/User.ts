@@ -75,7 +75,7 @@ export default abstract class User implements UserInterface {
         throw new Error("Method not implemented.");
     }
 
-    assignRoles(userId: number, role: UserRole): void {
+    assignRoles(): void {
         throw new Error("Method not implemented.");
     }
 

@@ -8,7 +8,7 @@ export default interface UserInterface {
     viewEmployees():void;
     updateEmployee():void;    
     deleteEmployee():void;
-    assignRoles(userId:number,role:UserRole):void;
+    assignRoles():void;
 
     createProject(project:Project):void;
     assignProjectToEmployee(projectId:string,employeeId:string):void;

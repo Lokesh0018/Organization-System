@@ -9,7 +9,7 @@ let service;
 
 while (true) {
     if (!curUser) {
-        console.log("\n1. Login\n2. Exit");
+        console.log("\n1. Login\n2. Exit\n");
         const choice: number = parseInt(prompt("Enter Choice: "));
         switch (choice) {
             case 1:
@@ -49,8 +49,16 @@ while (true) {
                         service = EmployeeService.getInstance();
                         service.deleteEmployee();
                         break;
+                    case 5:
+                        service = EmployeeService.getInstance();
+                        service.assignRole();
+                        break;
                     case 16:
                         curUser = null;
+                        break;
+                    default:
+                        console.log("\nInvalid Action\n");
+                        break;
                 }
                 break;
             case "HR":
