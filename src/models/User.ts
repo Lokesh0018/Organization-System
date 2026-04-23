@@ -59,19 +59,19 @@ export default abstract class User implements UserInterface {
         this.role = role;
     }
 
-    createEmployee(user: User): void {
+    createEmployee(): void {
         throw new Error("Method not implemented.");
     }
 
-    viewEmployee(userId: number): User {
+    viewEmployees(): User {
         throw new Error("Method not implemented.");
     }
 
-    updateEmployee(userId: number, user: User): void {
+    updateEmployee(): void {
         throw new Error("Method not implemented.");
     }
 
-    deleteEmployee(userId: number): void {
+    deleteEmployee(): void {
         throw new Error("Method not implemented.");
     }
 

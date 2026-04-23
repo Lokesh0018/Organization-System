@@ -4,10 +4,10 @@ import User from "../models/User";
 import { TaskStatus, UserRole } from "../types/Types";
 
 export default interface UserInterface {
-    createEmployee(user:User):void;
-    viewEmployee(userId:number):User;
-    updateEmployee(userId:number,user:User):void;
-    deleteEmployee(userId:number):void;
+    createEmployee(): void;
+    viewEmployees():void;
+    updateEmployee():void;    
+    deleteEmployee():void;
     assignRoles(userId:number,role:UserRole):void;
 
     createProject(project:Project):void;

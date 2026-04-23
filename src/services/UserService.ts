@@ -21,6 +21,10 @@ export default class UserService {
         return data.find(d => d.email === email);
     }
 
+    getIndex(id:string):number {
+        return parseInt(id)-1;
+    }
+
     getData():UserJson[] {
         const jsonService = JsonService.getInstance();
         return jsonService.readJson(UserService.userPath);

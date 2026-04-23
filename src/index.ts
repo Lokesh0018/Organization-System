@@ -45,6 +45,10 @@ while (true) {
                         service = EmployeeService.getInstance();
                         service.updateEmployee();
                         break;
+                    case 4:
+                        service = EmployeeService.getInstance();
+                        service.deleteEmployee();
+                        break;
                     case 16:
                         curUser = null;
                 }

@@ -87,7 +87,8 @@ export default class EmployeeService {
     updateEmployee():void {        
         console.log("\nUpdating Employee...\n");
         const email:string = prompt("Enter Email: ");
-        const employee:EmployeeJson | undefined = this.findByEmail(email);
+        const employeeService = EmployeeService.getInstance();
+        const employee:EmployeeJson | undefined = employeeService.findByEmail(email);
         const userService = UserService.getInstance();
         const user:UserJson | undefined = userService.findByEmail(email);
         if(!employee || !user){
@@ -107,11 +108,10 @@ export default class EmployeeService {
             "password":user.password,
             "role":user.role
         }
-        const employeeService = EmployeeService.getInstance();
         const empData = employeeService.getData();
         const userData = userService.getData();
         const empIdx:number = employeeService.getIndex(employee.id);
-        const userIdx:number = parseInt(user.id)-1;
+        const userIdx:number = userService.getIndex(user.id);
         let saveChanges = false;
         const jsonService = JsonService.getInstance();
         while(!saveChanges){
@@ -141,11 +141,38 @@ export default class EmployeeService {
                     jsonService.writeJson(EmployeeService.getPath(),empData);
                     jsonService.writeJson(UserService.getPath(),userData);
                     saveChanges = true;
+                    console.log(`\n${updatedEmployee.name} Updated Successfully\n`);
                     break;
                 case 5:
                     return;
             }
         }
+    }
 
+    deleteEmployee():void {
+        console.log("\Deleting Employee...\n");
+        const email:string = prompt("Enter Email: ");
+        const employeeService = EmployeeService.getInstance();
+        const employee:EmployeeJson | undefined = employeeService.findByEmail(email);
+        const userService = UserService.getInstance();
+        const user:UserJson | undefined = userService.findByEmail(email);
+        if(!employee || !user){
+            console.log("\nEmployee not found for Deletion !\n");
+            return;
+        }
+        let empData = employeeService.getData();
+        let userData = userService.getData();
+        empData = empData.filter(e => e.email !== email);
+        userData = userData.filter(u => u.email !== email);
+        const empIdx = employeeService.getIndex(employee.id);
+        const userIdx = userService.getIndex(user.id);
+        for(let i:number=empIdx;i<empData.length;i++)
+            empData[i]!.id = `E${i+1}`;
+        for(let i:number=userIdx;i<userData.length;i++)
+            userData[i]!.id = `${i+1}`;
+        const jsonService = JsonService.getInstance();
+        jsonService.writeJson(EmployeeService.getPath(),empData);
+        jsonService.writeJson(UserService.getPath(),userData);
+        console.log(`\n${employee.name} Deleted Successfully !\n`);
     }
 }
