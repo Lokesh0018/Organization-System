@@ -60,7 +60,7 @@ while (true) {
                         break;
                     case 7:
                         service = ProjectService.getInstance();
-                        service.assignProject();
+                        service.assignProjectToEmployee();
                         break;
                     case 16:
                         curUser = null;

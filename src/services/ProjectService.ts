@@ -1,54 +1,110 @@
 import promptSync from "prompt-sync";
 import JsonService from "./JsonService";
 import { ProjectJson } from "../types/Types";
+import EmployeeService from "./EmployeeService";
 
 const prompt = promptSync();
 export default class ProjectService {
-    private static projectService:ProjectService;
+    private static projectService: ProjectService;
     private static projPath = "D:/organization-system/src/data/projects.json";
 
-    static getInstance():ProjectService{
-        if(!this.projectService)
+    static getInstance(): ProjectService {
+        if (!this.projectService)
             this.projectService = new ProjectService();
         return this.projectService;
     }
 
-    static getProjectPath():string {
+    static getPath(): string {
         return this.projPath;
     }
-    
-    getProjectById(id:string,data:ProjectJson[]){
+
+    getIndex(projectId: string, projData: ProjectJson[]): number {
+        let idx: number = 0;
+        projData.forEach((p, i) => {
+            if (projectId === p.id) {
+                idx = i;
+                return idx;
+            }
+        })
+        return idx;
+    }
+
+    getData(): ProjectJson[] {
+        const jsonService = JsonService.getInstance();
+        return jsonService.readJson(ProjectService.getPath());
+    }
+
+    findById(id: string, data: ProjectJson[]) {
         return data.find(d => d.id === id);
     }
 
-    createProject():void {
+    createProject(): void {
         console.log("\nCreating Project...\n");
         const projectId = prompt("Enter Project Id: ");
-        if(!projectId){
+        if (!projectId) {
             console.log("\nProject Id cannot be Empty !\n");
             return;
         }
         const projectService = ProjectService.getInstance();
         const jsonService = JsonService.getInstance();
-        const projectData = jsonService.readJson(ProjectService.getProjectPath());
-        const project = projectService.getProjectById(projectId,projectData);
-        if(project){
+        const projectData = jsonService.readJson(ProjectService.getPath());
+        const project = projectService.findById(projectId, projectData);
+        if (project) {
             console.log(`\nAlready Created Project with Same Id (${projectId}) \n`);
             return;
         }
         const name = prompt("Enter Project Name: ");
-        if(!name){
-           console.log("\nProject Name cannot be Empty !\n");
-            return; 
+        if (!name) {
+            console.log("\nProject Name cannot be Empty !\n");
+            return;
         }
-        const proj:ProjectJson = {
-            "id":projectId,
-            "name":name,
-            "employeeId":"",
-            "clientId":""
+        const proj: ProjectJson = {
+            "id": projectId,
+            "name": name,
+            "employeeId": "",
+            "clientId": ""
         }
         projectData.push(proj);
-        jsonService.writeJson(ProjectService.getProjectPath(),projectData);
+        jsonService.writeJson(ProjectService.getPath(), projectData);
+        console.log("\nProject Created Successfully !\n");
     }
 
+    assignProjectToEmployee(): void {
+        const projectId = prompt("Enter Project Id: ");
+        if (!projectId) {
+            console.log("\nProject Id cannot be Empty !\n");
+            return;
+        }
+        const projectService = ProjectService.getInstance();
+        const projData = projectService.getData();
+        const project = projectService.findById(projectId, projData);
+        if (!project) {
+            console.log("\nProject not found !\n");
+            return;
+        }
+        const employeeId = prompt("Enter Employee Id: ");
+        if (!employeeId) {
+            console.log("\nEmployee Id cannot be Empty !\n");
+            return;
+        }
+        const employeeService = EmployeeService.getInstance();
+        const empData = employeeService.getData();
+        const employee = employeeService.findById(employeeId, empData);
+        if (!employee) {
+            console.log("\nEmployee not found !\n");
+            return;
+        }
+        const empIdx = employeeService.getIndex(employee.id);
+        if (empData[empIdx]!.assignedProjectIds.includes(projectId)) {
+            console.log(`\nProject ${projectId} was already Assigned to ${employeeId}\n`);
+            return;
+        }
+        empData[empIdx]!.assignedProjectIds.push(projectId);
+        const projIdx = projectService.getIndex(project.id, projData);
+        projData[projIdx]!.employeeId = employeeId;
+        const jsonService = JsonService.getInstance();
+        jsonService.writeJson(EmployeeService.getPath(), empData);
+        jsonService.writeJson(ProjectService.getPath(), projData);
+        console.log(`\nProject ${projectId} was Assigned to ${employeeId}\n`);
+    }
 }

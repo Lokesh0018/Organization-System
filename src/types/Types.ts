@@ -14,7 +14,7 @@ export type EmployeeJson = {
     "id": string;
     "name": string;
     "email": string;
-    "assignedProjectId": string;
+    "assignedProjectIds": string[];
 }
 
 export type ProjectJson = {

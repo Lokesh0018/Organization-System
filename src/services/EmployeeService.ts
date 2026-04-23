@@ -20,7 +20,7 @@ export default class EmployeeService {
 
     getData(): EmployeeJson[] {
         const jsonService = JsonService.getInstance();
-        return jsonService.readJson(EmployeeService.empPath);
+        return jsonService.readJson(EmployeeService.getPath());
     }
 
     getIndex(id: string): number {
@@ -29,6 +29,10 @@ export default class EmployeeService {
 
     findByEmail(email: string, data: EmployeeJson[]): EmployeeJson | undefined {
         return data.find(e => e.email === email);
+    }
+
+    findById(id:string,data:EmployeeJson[]):EmployeeJson | undefined {
+        return data.find(e => e.id === id);
     }
 
     verifyEmployee(empName: string, empEmail: string, empPass: string): boolean {
@@ -61,7 +65,7 @@ export default class EmployeeService {
             "id": empId,
             "name": empName,
             "email": empEmail,
-            "assignedProjectId": "",
+            "assignedProjectIds": [],
         }
         empData.push(emp);
         jsonService.writeJson(EmployeeService.getPath(), empData);
@@ -105,7 +109,7 @@ export default class EmployeeService {
             "id": employee.id,
             "name": employee.name,
             "email": employee.email,
-            "assignedProjectId": employee.assignedProjectId,
+            "assignedProjectIds": employee.assignedProjectIds,
         }
         const updatedUser = {
             "id": user.id,
