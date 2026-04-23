@@ -1,4 +1,4 @@
-import { UserJson } from "../types/Types";
+import { EmployeeJson, UserJson } from "../types/Types";
 import UserService from "./UserService";
 
 export default class LoginService {
@@ -11,8 +11,9 @@ export default class LoginService {
     }
 
     verifyLogin(email:string,password:string):UserJson | null {
-        const userService = UserService.getInstance()
-        const user = userService.findByEmail(email);
+        const userService = UserService.getInstance();
+        const userData = userService.getData();
+        const user = userService.findByEmail(email,userData);
         if(!user){
             console.log("\nInvalid User\n");
             return null;

@@ -2,6 +2,7 @@ import promptSync from "prompt-sync";
 import LoginService from "./services/LoginService";
 import { UserJson } from "./types/Types";
 import EmployeeService from "./services/EmployeeService";
+import ProjectService from "./services/ProjectService";
 
 let curUser: UserJson | null = null;
 const prompt = promptSync();
@@ -52,6 +53,14 @@ while (true) {
                     case 5:
                         service = EmployeeService.getInstance();
                         service.assignRole();
+                        break;
+                    case 6:
+                        service = ProjectService.getInstance();
+                        service.createProject();
+                        break;
+                    case 7:
+                        service = ProjectService.getInstance();
+                        service.assignProject();
                         break;
                     case 16:
                         curUser = null;
