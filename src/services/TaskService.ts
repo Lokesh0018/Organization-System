@@ -36,6 +36,10 @@ export default class TaskService{
         return 0;
     }
 
+    tasksByProjectId(projectId:string,data:TaskJson[]){
+        return data.filter((d) => d.projectId === projectId);
+    }
+
     createTask():void {
         console.log(`\nCreating Task...\n`);
         const taskId = prompt("Enter Task Id: ");
@@ -123,4 +127,23 @@ export default class TaskService{
         console.log(`\nTask Status Updated Successfully\n`);
     }
 
+    viewOwnTasks(user:UserJson):void {
+        const taskService = TaskService.getInstance();
+        const taskData = taskService.getData();
+        if(user.role==="ADMIN" || user.role==="PM"){
+            console.table(taskData);
+            return;
+        }
+        const employeeService = EmployeeService.getInstance();
+        const empData = employeeService.getData();
+        const employee = employeeService.findByEmail(user.email,empData);
+        const projectIds = employee?.assignedProjectIds;
+        if(projectIds?.length === 0){
+            console.log("\nNo tasks Found !\n");
+            return;
+        }
+        projectIds?.forEach((id) => {
+            console.table(taskService.tasksByProjectId(id,taskData));
+        })
+    }
 }
