@@ -137,7 +137,7 @@ export default class ProjectService {
         const projData = projectService.getData();
         const project = projectService.findById(projId,projData);
         if(!project){
-            console.log("\nProject not found...\n");
+            console.log("\nProject not found !\n");
             return;
         }
         const projIdx = projectService.getIndex(projId,projData);
@@ -145,5 +145,22 @@ export default class ProjectService {
         const jsonService = JsonService.getInstance();
         jsonService.writeJson(ProjectService.getPath(),projData);
         console.log(`\nClient ${clientId} was Assigned to Project ${projId}\n`);
+    }
+
+    viewProject():void{
+        console.log("\nViewing Project...\n");
+        const projectId = prompt("Enter Project Id: ");
+        if(!projectId){
+            console.log("\nProject Id cannot be Empty !\n");
+            return;
+        }
+        const projectService = ProjectService.getInstance();
+        const projData = projectService.getData();
+        const project = projectService.findById(projectId,projData);
+        if(!project){
+            console.log("\nProject not found !\n");
+            return;
+        }
+        console.log(`\n${project.id} -> ${project.name} -> ${project.employeeId} -> ${project.clientId}\n`);
     }
 }
