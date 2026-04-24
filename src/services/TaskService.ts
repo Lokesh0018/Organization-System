@@ -29,11 +29,7 @@ export default class TaskService{
     }
 
     getIndex(taskId:string,data:TaskJson[]):number{
-        data.forEach((d,i) => {
-            if(d.id === taskId)
-                return i;
-        });
-        return 0;
+        return data.findIndex(d => d.id === taskId);
     }
 
     tasksByProjectId(projectId:string,data:TaskJson[]){
@@ -120,7 +116,7 @@ export default class TaskService{
                 break;
             default:
                 console.log("\nInvalid Task Status !\n");
-                break;
+                return;
         }
         const jsonService = JsonService.getInstance();
         jsonService.writeJson(TaskService.getPath(),taskData);

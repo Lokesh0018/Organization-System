@@ -21,11 +21,7 @@ export default class ProjectService {
     }
 
     getIndex(projectId: string, projData: ProjectJson[]): number {
-        projData.forEach((p, i) => {
-            if (projectId === p.id) 
-                return i;
-        })
-        return 0;
+        return projData.findIndex(p => p.id === projectId);
     }
 
     getData(): ProjectJson[] {

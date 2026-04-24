@@ -175,7 +175,7 @@ export default class EmployeeService {
     }
 
     deleteEmployee(): void {
-        console.log("\Deleting Employee...\n");
+        console.log("\nDeleting Employee...\n");
         const email: string = prompt("Enter Email: ");
         if (!email) {
             console.log("\nEmail cannot be Empty !\n");
@@ -208,7 +208,7 @@ export default class EmployeeService {
     }
 
     assignRole(): void {
-        console.log("\Assigning Role...\n");
+        console.log("\nAssigning Role...\n");
         const email: string = prompt("Enter Email: ");
         if (!email) {
             console.log("\nEmail cannot be Empty !\n");
@@ -226,6 +226,7 @@ export default class EmployeeService {
         const newRole = parseInt(prompt("Enter New Role to be assigned: ")) - 1;
         if(newRole<0 || newRole>=roles.length){
             console.log("\nInvalid Role !\n");
+            return;
         }
         if (user.role === roles[newRole]) {
             console.log("\nUpdating with Same Role\n");
