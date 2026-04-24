@@ -3,6 +3,7 @@ import JsonService from "./JsonService";
 import { ProjectJson, UserJson } from "../types/Types";
 import EmployeeService from "./EmployeeService";
 import UserService from "./UserService";
+import TaskService from "./TaskService";
 
 const prompt = promptSync();
 export default class ProjectService {
@@ -159,5 +160,25 @@ export default class ProjectService {
             return;
         }
         console.log(`\n${project.id} -> ${project.name} -> ${project.employeeId} -> ${project.clientId}\n`);
+    }
+
+    trackProjectProgress():void{
+        console.log("\nTracking Project Progress...\n");
+        const projectId = prompt("Enter Project Id: ");
+        if(!projectId){
+            console.log("\nProject Id cannot be Empty !\n");
+            return;
+        }
+        const projectService = ProjectService.getInstance();
+        const projectData = projectService.getData();
+        const project = projectService.findById(projectId,projectData);
+        if(!project){
+            console.log("\nProject not found\n");
+            return;
+        }
+        const taskService = TaskService.getInstance();
+        const taskData = taskService.getData();
+        const tasks = taskService.tasksByProjectId(project.id,taskData);
+        console.table(tasks);
     }
 }

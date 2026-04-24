@@ -83,6 +83,10 @@ while (true) {
                         service = TaskService.getInstance();
                         service.viewOwnTasks(curUser);
                         break;
+                    case 13:
+                        service = ProjectService.getInstance();
+                        service.trackProjectProgress();
+                        break;
                     case 16:
                         curUser = null;
                         break;
