@@ -23,3 +23,10 @@ export type ProjectJson = {
     "employeeId": string,
     "clientId": string
 }
+
+export type TaskJson = {
+    "id": string,
+    "title": string,
+    "projectId": string,
+    "status": "TODO" | "IN_PROGRESS" | "DONE"
+}

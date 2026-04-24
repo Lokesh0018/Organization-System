@@ -3,6 +3,7 @@ import LoginService from "./services/LoginService";
 import { UserJson } from "./types/Types";
 import EmployeeService from "./services/EmployeeService";
 import ProjectService from "./services/ProjectService";
+import TaskService from "./services/TaskService";
 
 let curUser: UserJson | null = null;
 const prompt = promptSync();
@@ -65,6 +66,10 @@ while (true) {
                     case 8:
                         service = ProjectService.getInstance();
                         service.assignClient();
+                        break;
+                    case 9:
+                        service = TaskService.getInstance();
+                        service.createTask();
                         break;
                     case 16:
                         curUser = null;
