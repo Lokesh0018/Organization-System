@@ -75,6 +75,14 @@ while (true) {
                         service = ProjectService.getInstance();
                         service.viewProject();
                         break;
+                    case 11:
+                        service = TaskService.getInstance();
+                        service.updateTask(curUser);
+                        break;
+                    case 12:
+                        service = TaskService.getInstance();
+                        service.viewOwnTasks(curUser);
+                        break;
                     case 16:
                         curUser = null;
                         break;

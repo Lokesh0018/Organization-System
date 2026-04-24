@@ -20,14 +20,11 @@ export default class ProjectService {
     }
 
     getIndex(projectId: string, projData: ProjectJson[]): number {
-        let idx: number = 0;
         projData.forEach((p, i) => {
-            if (projectId === p.id) {
-                idx = i;
-                return idx;
-            }
+            if (projectId === p.id) 
+                return i;
         })
-        return idx;
+        return 0;
     }
 
     getData(): ProjectJson[] {

@@ -1,7 +1,8 @@
 import promptSync from "prompt-sync";
 import ProjectService from "./ProjectService";
-import { TaskJson } from "../types/Types";
+import { TaskJson, TaskStatus, UserJson } from "../types/Types";
 import JsonService from "./JsonService";
+import EmployeeService from "./EmployeeService";
 
 const prompt = promptSync();
 export default class TaskService{
@@ -25,6 +26,14 @@ export default class TaskService{
 
     findById(id:string,data:TaskJson[]):TaskJson | undefined {
         return data.find(d => d.id === id);
+    }
+
+    getIndex(taskId:string,data:TaskJson[]):number{
+        data.forEach((d,i) => {
+            if(d.id === taskId)
+                return i;
+        });
+        return 0;
     }
 
     createTask():void {
@@ -61,4 +70,57 @@ export default class TaskService{
         jsonService.writeJson(TaskService.getPath(),taskData);
         console.log(`\n${taskId} was Created Successfully\n`);
     }
+
+    updateTask(user:UserJson):void {
+        console.log("\nUpdating Task...\n");
+        const taskId = prompt("Enter Task Id: ");
+        if(!taskId){
+            console.log("\nTask Id cannot be Empty !\n");
+            return;
+        }
+        const taskService = TaskService.getInstance();
+        const taskData = taskService.getData();
+        const task = taskService.findById(taskId,taskData);
+        if(!task){
+            console.log("\nTask not found !\n");
+            return;
+        }
+        if(user.role === "EMPLOYEE"){
+            const employeeService = EmployeeService.getInstance();
+            const employeeData = employeeService.getData();
+            const employee = employeeService.findByEmail(user.email,employeeData);
+            if(!employee?.assignedProjectIds.includes(task.projectId)){
+                console.log(`\nEmployee ${employee?.id} cannot have access to update Task ${task.id}\n`);
+                return;
+            }
+        }
+        const status:TaskStatus[] = ["TODO", "In Progress", "Done"];
+        status.forEach((t,idx) => console.log(`${idx+1}. ${t}`));
+        const updatedStatus:number = parseInt(prompt("Enter Status: "));
+        const taskIdx = taskService.getIndex(task.id,taskData);
+        switch(updatedStatus){
+            case 1:
+                if(task.status === "TODO")
+                    return;
+                taskData[taskIdx]!.status = "TODO";
+                break;
+            case 2:
+                if(task.status === "IN_PROGRESS")
+                    return;
+                taskData[taskIdx]!.status = "IN_PROGRESS";
+                break;
+            case 3:
+                if(task.status === "DONE")
+                    return;
+                taskData[taskIdx]!.status = "DONE";
+                break;
+            default:
+                console.log("\nInvalid Task Status !\n");
+                break;
+        }
+        const jsonService = JsonService.getInstance();
+        jsonService.writeJson(TaskService.getPath(),taskData);
+        console.log(`\nTask Status Updated Successfully\n`);
+    }
+
 }
