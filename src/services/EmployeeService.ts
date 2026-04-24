@@ -2,6 +2,7 @@ import promptSync from "prompt-sync";
 import JsonService from "./JsonService";
 import { EmployeeJson, UserJson, UserRole } from "../types/Types";
 import UserService from "./UserService";
+import FinanceService from "./FinanceService";
 
 const prompt = promptSync();
 export default class EmployeeService {
@@ -80,6 +81,8 @@ export default class EmployeeService {
         }
         userData.push(user);
         jsonService.writeJson(UserService.getPath(), userData);
+        const financeService = FinanceService.getInstance();
+        financeService.addEmployee(empId);
         console.log("\nEmployee Created Successfully\n");
     }
 
@@ -199,6 +202,8 @@ export default class EmployeeService {
         const jsonService = JsonService.getInstance();
         jsonService.writeJson(EmployeeService.getPath(), empData);
         jsonService.writeJson(UserService.getPath(), userData);
+        const financeService = FinanceService.getInstance();
+        financeService.deleteEmployee(employee.id);
         console.log(`\n${employee.name} Deleted Successfully !\n`);
     }
 

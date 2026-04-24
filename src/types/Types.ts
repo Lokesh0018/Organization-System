@@ -30,3 +30,9 @@ export type TaskJson = {
     "projectId": string,
     "status": "TODO" | "IN_PROGRESS" | "DONE"
 }
+
+export type FinanceJson = {
+    "id":string;
+    "salary":number;
+    "insurance":number;
+}

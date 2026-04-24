@@ -4,6 +4,7 @@ import { UserJson } from "./types/Types";
 import EmployeeService from "./services/EmployeeService";
 import ProjectService from "./services/ProjectService";
 import TaskService from "./services/TaskService";
+import FinanceService from "./services/FinanceService";
 
 let curUser: UserJson | null = null;
 const prompt = promptSync();
@@ -86,6 +87,14 @@ while (true) {
                     case 13:
                         service = ProjectService.getInstance();
                         service.trackProjectProgress();
+                        break;
+                    case 14:
+                        service = FinanceService.getInstance();
+                        service.manageSalary();
+                        break;
+                    case 15:
+                        service = FinanceService.getInstance();
+                        service.manageInsurance();
                         break;
                     case 16:
                         curUser = null;
