@@ -1,4 +1,6 @@
-import { EmployeeJson, UserJson } from "../types/Types";
+import User from "../models/User";
+import UserFactory from "../patterns/UserFactory";
+import { Roles } from "../types/Types";
 import UserService from "./UserService";
 
 export default class LoginService {
@@ -10,7 +12,7 @@ export default class LoginService {
         return this.loginService;
     }
 
-    verifyLogin(email:string,password:string):UserJson | null {
+    verifyLogin(email:string,password:string):Roles | null {
         const userService = UserService.getInstance();
         const userData = userService.getData();
         const user = userService.findByEmail(email,userData);
@@ -23,7 +25,8 @@ export default class LoginService {
             return null;
         }
         console.log(`\n${user.name} Logged in Successfully as ${user.role}\n`);
-        return user;
+        const u = new User(user.id,user.name,user.email,user.password,user.role);
+        return UserFactory.createUser(u);
     }
 
 }

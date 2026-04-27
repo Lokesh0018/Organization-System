@@ -1,10 +1,7 @@
 import UserInterface from "../interfaces/UserInterface";
-import { TaskStatus, UserRole } from "../types/Types";
-import Project from "./Project";
-import Task from "./Task";
+import { UserRole } from "../types/Types";
 
-export default abstract class User implements UserInterface {
-
+export default class User implements UserInterface {
     private id: string;
     private name: string;
     private email: string;
@@ -58,65 +55,4 @@ export default abstract class User implements UserInterface {
     public setRole(role: UserRole): void {
         this.role = role;
     }
-
-    createEmployee(): void {
-        throw new Error("Method not implemented.");
-    }
-
-    viewEmployees(): User {
-        throw new Error("Method not implemented.");
-    }
-
-    updateEmployee(): void {
-        throw new Error("Method not implemented.");
-    }
-
-    deleteEmployee(): void {
-        throw new Error("Method not implemented.");
-    }
-
-    assignRoles(): void {
-        throw new Error("Method not implemented.");
-    }
-
-    createProject(project: Project): void {
-        throw new Error("Method not implemented.");
-    }
-
-    assignProjectToEmployee(projectId: string, employeeId: string): void {
-        throw new Error("Method not implemented.");
-    }
-
-    viewProject(projectId: string): Project {
-        throw new Error("Method not implemented.");
-    }
-
-    assignClients(clientId: string, employeeId: string): void {
-        throw new Error("Method not implemented.");
-    }
-
-    createTasks(task: Task): void {
-      throw new Error("Method not implemented.");
-    }
-
-    updateTasks(taskId: string, taskStatus: TaskStatus): void {
-        throw new Error("Method not implemented.");
-    }
-
-    viewOwnTasks(employeeId: string): Task[] {
-        throw new Error("Method not implemented.");
-    }
-
-    trackProjectProgress(projectId: string): Task[] {
-        throw new Error("Method not implemented.");
-    }
-
-    manageSalary(employeeId: string): void {
-        throw new Error("Method not implemented.");
-    }
-
-    manageInsurance(employeeId: string): void {
-        throw new Error("Method not implemented.");
-    }
-
 }

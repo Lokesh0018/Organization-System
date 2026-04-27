@@ -1,8 +1,9 @@
 import promptSync from "prompt-sync";
 import ProjectService from "./ProjectService";
-import { TaskJson, TaskStatus, UserJson } from "../types/Types";
+import { TaskJson, TaskStatus } from "../types/Types";
 import JsonService from "./JsonService";
 import EmployeeService from "./EmployeeService";
+import User from "../models/User";
 
 const prompt = promptSync();
 export default class TaskService{
@@ -71,7 +72,7 @@ export default class TaskService{
         console.log(`\n${taskId} was Created Successfully\n`);
     }
 
-    updateTask(user:UserJson):void {
+    updateTask(user:User):void {
         console.log("\nUpdating Task...\n");
         const taskId = prompt("Enter Task Id: ");
         if(!taskId){
@@ -85,10 +86,10 @@ export default class TaskService{
             console.log("\nTask not found !\n");
             return;
         }
-        if(user.role === "EMPLOYEE"){
+        if(user.getRole() === "EMPLOYEE"){
             const employeeService = EmployeeService.getInstance();
             const employeeData = employeeService.getData();
-            const employee = employeeService.findByEmail(user.email,employeeData);
+            const employee = employeeService.findByEmail(user.getEmail(),employeeData);
             if(!employee?.assignedProjectIds.includes(task.projectId)){
                 console.log(`\nEmployee ${employee?.id} cannot have access to update Task ${task.id}\n`);
                 return;
@@ -123,16 +124,16 @@ export default class TaskService{
         console.log(`\nTask Status Updated Successfully\n`);
     }
 
-    viewOwnTasks(user:UserJson):void {
+    viewOwnTasks(user:User):void {
         const taskService = TaskService.getInstance();
         const taskData = taskService.getData();
-        if(user.role==="ADMIN" || user.role==="PM"){
+        if(user.getRole()==="ADMIN" || user.getRole()==="PM"){
             console.table(taskData);
             return;
         }
         const employeeService = EmployeeService.getInstance();
         const empData = employeeService.getData();
-        const employee = employeeService.findByEmail(user.email,empData);
+        const employee = employeeService.findByEmail(user.getEmail(),empData);
         const projectIds = employee?.assignedProjectIds;
         if(projectIds?.length === 0){
             console.log("\nNo tasks Found !\n");

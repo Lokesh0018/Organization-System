@@ -1,6 +1,6 @@
 import promptSync from "prompt-sync";
 import JsonService from "./JsonService";
-import { ProjectJson, UserJson } from "../types/Types";
+import { ProjectJson } from "../types/Types";
 import EmployeeService from "./EmployeeService";
 import UserService from "./UserService";
 import TaskService from "./TaskService";

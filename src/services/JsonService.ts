@@ -1,6 +1,5 @@
 import * as fs from "fs";
 import JsonInterface from "../interfaces/JsonInterface";
-import { UserJson } from "../types/Types";
 
 export default class JsonService implements JsonInterface {
     private static jsonService:JsonService;
@@ -13,7 +12,7 @@ export default class JsonService implements JsonInterface {
 
     readJson(path: string): any[] {
         const raw = fs.readFileSync(path,"utf-8");
-        const data: UserJson[] = JSON.parse(raw);
+        const data = JSON.parse(raw);
         return data;
     }
 

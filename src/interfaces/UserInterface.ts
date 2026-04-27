@@ -1,25 +1,8 @@
-import Project from "../models/Project";
-import Task from "../models/Task";
-import User from "../models/User";
-import { TaskStatus, UserRole } from "../types/Types";
+import { UserRole } from "../types/Types";
 
 export default interface UserInterface {
-    createEmployee(): void;
-    viewEmployees():void;
-    updateEmployee():void;    
-    deleteEmployee():void;
-    assignRoles():void;
-
-    createProject(project:Project):void;
-    assignProjectToEmployee(projectId:string,employeeId:string):void;
-    viewProject(projectId:string):Project;
-    assignClients(clientId:string,employeeId:string):void;
-
-    createTasks(task:Task):void;
-    updateTasks(taskId:string,taskStatus:TaskStatus):void;
-    viewOwnTasks(employeeId:string):Task[];
-    trackProjectProgress(projectId:string):Task[];
-
-    manageSalary(employeeId:string):void;
-    manageInsurance(employeeId:string):void;
+    getId(): string;
+    getName(): string;
+    getEmail(): string;
+    getRole(): UserRole;
 }

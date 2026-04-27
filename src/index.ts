@@ -1,87 +1,90 @@
 import promptSync from "prompt-sync";
 import LoginService from "./services/LoginService";
-import { UserJson } from "./types/Types";
-import EmployeeService from "./services/EmployeeService";
-import ProjectService from "./services/ProjectService";
-import TaskService from "./services/TaskService";
-import FinanceService from "./services/FinanceService";
+import UserSingleton from "./patterns/UserSingleton";
+import { Roles } from "./types/Types";
+import Admin from "./roles/Admin";
+import HR from "./roles/HR";
+import PM from "./roles/PM";
+import Employee from "./roles/Employee";
+import Client from "./roles/Client";
+import Finance from "./roles/Finance";
 
-let curUser: UserJson | null = null;
 const prompt = promptSync();
 
 while (true) {
+    const curUser:Roles | null = UserSingleton.getUser();
     if (!curUser) {
         console.log("\n1. Login\n2. Exit\n");
         const choice: number = parseInt(prompt("Enter Choice: "));
         switch (choice) {
             case 1:
-                const loginService = new LoginService();
                 const email = prompt("Enter Email: ");
                 const pass = prompt("Enter Password: ");
-                curUser = loginService.verifyLogin(email, pass);
+                UserSingleton.setUser(LoginService.getInstance().verifyLogin(email, pass));
                 break;
             case 2:
                 process.exit(0);
+                break;
             default:
                 console.log("\nWrong Choice\n");
                 break;
         }
     }
     else {
-        let actions;
-        switch (curUser.role) {
+        let actions: string[];
+        switch (curUser.getRole()) {
             case "ADMIN":
                 actions = ["Create Employee", "View Employees", "Update Employee", "Delete Employee", "Assign Roles", "Create Project", "Assign Project to Employees", "Assign Clients", "Create Tasks", "View Project", "Update Tasks", "View Own Tasks", "Track Project Progress", "Manage Salaries", "Manage Insurance", "Logout\n"];
                 actions.forEach((a, i) => console.log(`${i + 1}. ${a}`));
                 const adminAction = parseInt(prompt("Enter Action: "));
                 switch (adminAction) {
                     case 1:
-                        EmployeeService.getInstance().createEmployee();
+                        (curUser as Admin).createEmployee();
                         break;
                     case 2:
-                        EmployeeService.getInstance().viewEmployees();
+                        (curUser as Admin).viewEmployees();
                         break;
                     case 3:
-                        EmployeeService.getInstance().updateEmployee();
+                        (curUser as Admin).updateEmployee();
                         break;
                     case 4:
-                        EmployeeService.getInstance().deleteEmployee();
+                        (curUser as Admin).deleteEmployee();
                         break;
                     case 5:
-                        EmployeeService.getInstance().assignRole();
+                        (curUser as Admin).assignRole();
                         break;
                     case 6:
-                        ProjectService.getInstance().createProject();
+                        (curUser as Admin).createProject();
                         break;
                     case 7:
-                        ProjectService.getInstance().assignProject();
+                        (curUser as Admin).assignProject();
                         break;
                     case 8:
-                        ProjectService.getInstance().assignClient();
+                        (curUser as Admin).assignClient();
                         break;
                     case 9:
-                        TaskService.getInstance().createTask();
+                        (curUser as Admin).createTask();
                         break;
                     case 10:
-                        ProjectService.getInstance().viewProject();
+                        (curUser as Admin).viewProject();
                         break;
                     case 11:
-                        TaskService.getInstance().updateTask(curUser);
+                        (curUser as Admin).updateTask(curUser);
                         break;
                     case 12:
-                        TaskService.getInstance().viewOwnTasks(curUser);
+                        (curUser as Admin).viewOwnTasks(curUser);
                         break;
                     case 13:
-                        ProjectService.getInstance().trackProjectProgress();
+                        (curUser as Admin).trackProjectProgress();
                         break;
                     case 14:
-                        FinanceService.getInstance().manageSalary();
+                        (curUser as Admin).manageSalary();
                         break;
                     case 15:
-                        FinanceService.getInstance().manageInsurance();
+                        (curUser as Admin).manageInsurance();
                         break;
                     case 16:
-                        curUser = null;
+                        UserSingleton.setUser(null);
                         break;
                     default:
                         console.log("\nInvalid Action\n");
@@ -94,16 +97,16 @@ while (true) {
                 const hrAction = parseInt(prompt("Enter Action: "));
                 switch (hrAction) {
                     case 1:
-                        EmployeeService.getInstance().createEmployee();
+                        (curUser as HR).createEmployee();
                         break;
                     case 2:
-                        EmployeeService.getInstance().viewEmployees();
+                        (curUser as HR).viewEmployees();
                         break;
                     case 3:
-                        EmployeeService.getInstance().updateEmployee();
+                        (curUser as HR).updateEmployee();
                         break;
                     case 4:
-                        curUser = null;
+                        UserSingleton.setUser(null);
                         break;
                     default:
                         console.log("\nInvalid Action\n");
@@ -116,34 +119,34 @@ while (true) {
                 const pmAction = parseInt(prompt("Enter Action: "));
                 switch (pmAction) {
                     case 1:
-                        EmployeeService.getInstance().viewEmployees();
+                        (curUser as PM).viewEmployees();
                         break;
                     case 2:
-                        ProjectService.getInstance().createProject();
+                        (curUser as PM).createProject();
                         break;
                     case 3:
-                        ProjectService.getInstance().assignProject();
+                        (curUser as PM).assignProject();
                         break;
                     case 4:
-                        ProjectService.getInstance().assignClient();
+                        (curUser as PM).assignClient();
                         break;
                     case 5:
-                        TaskService.getInstance().createTask();
+                        (curUser as PM).createTask();
                         break;
                     case 6:
-                        ProjectService.getInstance().viewProject();
+                        (curUser as PM).viewProject();
                         break;
                     case 7:
-                        TaskService.getInstance().updateTask(curUser!);
+                        (curUser as PM).updateTask(curUser);
                         break;
                     case 8:
-                        TaskService.getInstance().viewOwnTasks(curUser!);
+                        (curUser as PM).viewOwnTasks(curUser);
                         break;
                     case 9:
-                        ProjectService.getInstance().trackProjectProgress();
+                        (curUser as PM).trackProjectProgress();
                         break;
                     case 10:
-                        curUser = null;
+                        UserSingleton.setUser(null);
                         break;
                     default:
                         console.log("\nInvalid Action\n");
@@ -156,19 +159,19 @@ while (true) {
                 const employeeAction = parseInt(prompt("Enter Action: "));
                 switch (employeeAction) {
                     case 1:
-                        ProjectService.getInstance().viewProject();
+                        (curUser as Employee).viewProject();
                         break;
                     case 2:
-                        TaskService.getInstance().updateTask(curUser!);
+                        (curUser as Employee).updateTask(curUser);
                         break;
                     case 3:
-                        TaskService.getInstance().viewOwnTasks(curUser!);
+                        (curUser as Employee).viewOwnTasks(curUser);
                         break;
                     case 4:
-                        ProjectService.getInstance().trackProjectProgress();
+                        (curUser as Employee).trackProjectProgress();
                         break;
                     case 5:
-                        curUser = null;
+                        UserSingleton.setUser(null);
                         break;
                     default:
                         console.log("\nInvalid Action\n");
@@ -181,13 +184,13 @@ while (true) {
                 const clientAction = parseInt(prompt("Enter Action: "));
                 switch(clientAction){
                     case 1:
-                        ProjectService.getInstance().viewProject();
+                        (curUser as Client).viewProject();
                         break;
                     case 2:
-                        ProjectService.getInstance().trackProjectProgress();
+                        (curUser as Client).trackProjectProgress();
                         break;
                     case 3:
-                        curUser = null;
+                        UserSingleton.setUser(null);
                         break;
                     default:
                         console.log("\nInvalid Action\n");
@@ -200,18 +203,21 @@ while (true) {
                 const financeAction = parseInt(prompt("Enter Action: "));
                 switch(financeAction){
                     case 1:
-                        FinanceService.getInstance().manageSalary();
+                        (curUser as Finance).manageSalary();
                         break;
                     case 2:
-                        FinanceService.getInstance().manageInsurance();
+                        (curUser as Finance).manageInsurance();
                         break;
                     case 3:
-                        curUser = null;
+                        UserSingleton.setUser(null);
                         break;
                     default:
                         console.log("\nInvalid Action\n");
                         break;
                 }
+                break;
+            default:
+                console.log("Invalid User !");
                 break;
         }
     }

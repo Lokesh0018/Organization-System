@@ -12,5 +12,19 @@
     "email": "2",
     "password": "2",
     "role": "HR"
+  },
+  {
+    "id": "3",
+    "name": "1",
+    "email": "1",
+    "password": "1",
+    "role": "EMPLOYEE"
+  },
+  {
+    "id": "4",
+    "name": "2",
+    "email": "555",
+    "password": "5",
+    "role": "EMPLOYEE"
   }
 ]
