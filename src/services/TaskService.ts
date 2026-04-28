@@ -22,7 +22,7 @@ export default class TaskService{
 
     getData():TaskJson[]{
         const jsonService = JsonService.getInstance();
-        return jsonService.readJson(TaskService.getPath()); 
+        return jsonService.readJson(TaskService.getPath()) as TaskJson[]; 
     }
 
     findById(id:string,data:TaskJson[]):TaskJson | undefined {

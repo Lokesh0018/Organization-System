@@ -29,6 +29,6 @@ export default class UserService {
 
     getData():UserJson[] {
         const jsonService = JsonService.getInstance();
-        return jsonService.readJson(UserService.userPath);
+        return jsonService.readJson(UserService.userPath) as UserJson[];
     }
 }

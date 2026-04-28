@@ -19,8 +19,8 @@ while (true) {
         switch (choice) {
             case 1:
                 const email = prompt("Enter Email: ");
-                const pass = prompt("Enter Password: ");
-                UserSingleton.setUser(LoginService.getInstance().verifyLogin(email, pass));
+                const password = prompt("Enter Password: ");
+                UserSingleton.setUser(LoginService.getInstance().verifyLogin({email, password}));
                 break;
             case 2:
                 process.exit(0);

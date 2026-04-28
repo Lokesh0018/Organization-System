@@ -1,6 +1,6 @@
 import User from "../models/User";
 import UserFactory from "../patterns/UserFactory";
-import { Roles } from "../types/Types";
+import { LoginDetails, Roles } from "../types/Types";
 import UserService from "./UserService";
 
 export default class LoginService {
@@ -12,15 +12,15 @@ export default class LoginService {
         return this.loginService;
     }
 
-    verifyLogin(email:string,password:string):Roles | null {
+    verifyLogin(loginDetails:LoginDetails):Roles | null {
         const userService = UserService.getInstance();
         const userData = userService.getData();
-        const user = userService.findByEmail(email,userData);
+        const user = userService.findByEmail(loginDetails.email,userData);
         if(!user){
             console.log("\nInvalid User\n");
             return null;
         }
-        if(user && user.password !== password){
+        if(user && user.password !== loginDetails.password){
             console.log("\nInvalid Password\n");
             return null;
         }

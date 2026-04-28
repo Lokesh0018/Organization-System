@@ -1,18 +1,12 @@
 [
   {
     "id": "E1",
-    "name": "varsith",
-    "email": "2",
-    "assignedProjectIds": []
-  },
-  {
-    "id": "E2",
     "name": "1",
     "email": "1",
     "assignedProjectIds": []
   },
   {
-    "id": "E3",
+    "id": "E2",
     "name": "2",
     "email": "555",
     "assignedProjectIds": []

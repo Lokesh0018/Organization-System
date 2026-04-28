@@ -45,3 +45,10 @@ export type FinanceJson = {
     "salary":number;
     "insurance":number;
 }
+
+export type JsonTypes = UserJson | EmployeeJson | ProjectJson | TaskJson | FinanceJson;
+
+export type LoginDetails = {
+    email:string;
+    password:string;
+}

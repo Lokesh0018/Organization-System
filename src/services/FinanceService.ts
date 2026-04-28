@@ -20,7 +20,7 @@ export default class FinanceService {
 
     getData():FinanceJson[]{
         const jsonService = JsonService.getInstance();
-        return jsonService.readJson(FinanceService.getPath());
+        return jsonService.readJson(FinanceService.getPath()) as FinanceJson[];
     }
 
     addEmployee(id:string):void{

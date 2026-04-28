@@ -26,7 +26,7 @@ export default class ProjectService {
 
     getData(): ProjectJson[] {
         const jsonService = JsonService.getInstance();
-        return jsonService.readJson(ProjectService.getPath());
+        return jsonService.readJson(ProjectService.getPath()) as ProjectJson[];
     }
 
     findById(id: string, data: ProjectJson[]) {
@@ -43,7 +43,7 @@ export default class ProjectService {
         const projectService = ProjectService.getInstance();
         const jsonService = JsonService.getInstance();
         const projectData = jsonService.readJson(ProjectService.getPath());
-        const project = projectService.findById(projectId, projectData);
+        const project = projectService.findById(projectId, projectData as ProjectJson[]);
         if (project) {
             console.log(`\nAlready Created Project with Same Id (${projectId}) \n`);
             return;

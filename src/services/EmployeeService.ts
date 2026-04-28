@@ -21,7 +21,7 @@ export default class EmployeeService {
 
     getData(): EmployeeJson[] {
         const jsonService = JsonService.getInstance();
-        return jsonService.readJson(EmployeeService.getPath());
+        return jsonService.readJson(EmployeeService.getPath()) as EmployeeJson[];
     }
 
     getIndex(id: string): number {
@@ -42,7 +42,7 @@ export default class EmployeeService {
             return false;
         }
         const jsonService = JsonService.getInstance();
-        const empData = jsonService.readJson(EmployeeService.getPath());
+        const empData:EmployeeJson[] = jsonService.readJson(EmployeeService.getPath()) as EmployeeJson[];
         const emp = this.findByEmail(empEmail, empData);
         if (emp) {
             console.log(`\nEmployee was already created with this email (${empEmail})\n`);
