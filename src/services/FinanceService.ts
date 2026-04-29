@@ -71,6 +71,7 @@ export default class FinanceService {
         })
         const jsonService = JsonService.getInstance();
         jsonService.writeJson(FinanceService.getPath(),financeData);
+        console.log("\nSalary Updated Successfully !\n");
     }
 
     manageInsurance():void{
@@ -100,5 +101,6 @@ export default class FinanceService {
         })
         const jsonService = JsonService.getInstance();
         jsonService.writeJson(FinanceService.getPath(),financeData);
+        console.log("\nInsurance Updated Successfully !\n");
     }
 }

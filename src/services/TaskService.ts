@@ -125,6 +125,7 @@ export default class TaskService{
     }
 
     viewOwnTasks(user:User):void {
+        console.log("\nViewing Own Tasks...\n");
         const taskService = TaskService.getInstance();
         const taskData = taskService.getData();
         if(user.getRole()==="ADMIN" || user.getRole()==="PM"){
